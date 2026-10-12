@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Аян ном</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f2ee;--surface:#ffffff;--soft:#eae8e2;--ink:#0f1113;--ink2:#61656c;--line:#e2dfd8;
+  --accent:#ff5a2c;--accent-d:#e84a1d;--ok:#1f8a4c;--bad:#d23c2c;--gold:#f2b632;
+  --r:24px;--sh:0 24px 48px -24px rgba(20,18,15,.35);--sh2:0 1px 2px rgba(20,18,15,.06),0 6px 18px -8px rgba(20,18,15,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+h1,h2,h3,h4{font-weight:800;line-height:1.05;margin:0;letter-spacing:-.035em}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+img{max-width:100%}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+.muted{color:var(--ink2)}
+.chip-label{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border-radius:999px;padding:7px 14px 7px 10px;font-size:13px;font-weight:700;box-shadow:var(--sh2)}
+.chip-label i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(255,90,44,.18)}
+section{padding:110px 0}
+.sec-h{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:44px;flex-wrap:wrap}
+.sec-h h2{font-size:clamp(34px,4.6vw,60px)}
+.sec-h p{max-width:420px;color:var(--ink2)}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;padding:15px 26px;font-weight:700;font-size:15px;cursor:pointer;background:var(--ink);color:#fff;text-decoration:none;transition:transform .2s,background .2s,box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(0,0,0,.45)}
+.btn:active{transform:none}
+.btn .ar{transition:transform .2s}.btn:hover .ar{transform:translateX(3px)}
+.btn.acc{background:var(--accent)}.btn.acc:hover{background:var(--accent-d)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px rgba(15,17,19,.18)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.white{background:#fff;color:var(--ink)}
+.btn.sm{padding:10px 18px;font-size:13.5px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.link{background:none;border:0;padding:0;cursor:pointer;font-weight:700;color:var(--ink);text-decoration:underline;text-decoration-color:rgba(0,0,0,.25);text-underline-offset:4px}
+.link:hover{text-decoration-color:var(--ink)}
+
+/* header */
+.hd{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 12px);z-index:40;padding:0 12px}
+.hd-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:26px;height:62px;padding:0 10px 0 22px;background:rgba(255,255,255,.78);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-radius:999px;box-shadow:var(--sh2)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.03em;text-decoration:none;color:var(--ink);background:none;border:0;cursor:pointer;padding:0}
+.logo b{width:30px;height:30px;border-radius:9px;background:var(--ink);display:grid;place-items:center}
+.logo b svg{width:18px;height:18px}
+.nav{display:flex;gap:4px;margin-left:8px}
+.nav a{color:var(--ink2);text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border-radius:999px;transition:.15s}
+.nav a:hover{color:var(--ink);background:var(--soft)}
+.hd-r{margin-left:auto;display:flex;gap:8px;align-items:center}
+.icon-btn{position:relative;display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;border-radius:999px;padding:10px 14px;cursor:pointer;font-weight:700;font-size:14px;transition:.15s}
+.icon-btn:hover{background:var(--soft)}
+.icon-btn.dark{background:var(--ink);color:#fff}
+.icon-btn svg{width:18px;height:18px}
+.badge{min-width:20px;height:20px;border-radius:10px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 6px}
+.badge:empty{display:none}
+
+/* hero */
+.hero{padding:70px 0 30px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+.hero h1{font-size:clamp(52px,8.4vw,118px);letter-spacing:-.055em;line-height:.92;margin:26px 0 28px}
+.hero h1 span{color:var(--accent)}
+.hero .lead{font-size:18px;color:var(--ink2);max-width:520px;line-height:1.55}
+.hero .cta{display:flex;gap:12px;margin:34px 0 0;flex-wrap:wrap}
+.fan{position:relative;height:540px;perspective:1800px}
+.fan .b3d{position:absolute;--w:240px;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.fan .b3d:nth-child(1){left:2%;top:90px;transform:rotate(-9deg);z-index:1}
+.fan .b3d:nth-child(2){left:30%;top:20px;--w:270px;z-index:3}
+.fan .b3d:nth-child(3){right:0;top:110px;transform:rotate(8deg);z-index:2}
+.fan:hover .b3d:nth-child(1){transform:rotate(-13deg) translateX(-14px)}
+.fan:hover .b3d:nth-child(3){transform:rotate(12deg) translateX(14px)}
+.fan .b3d .b3d-in{animation:bob 7s ease-in-out infinite}
+.fan .b3d:nth-child(2) .b3d-in{animation-delay:-2.3s}.fan .b3d:nth-child(3) .b3d-in{animation-delay:-4.6s}
+@keyframes bob{50%{transform:rotateX(var(--rx,8deg)) rotateY(calc(var(--ry,-24deg) + 8deg)) translateY(-8px)}}
+.stats{display:flex;gap:40px;margin-top:56px;flex-wrap:wrap}
+.stats div b{display:block;font-size:30px;font-weight:800;letter-spacing:-.04em}
+.stats div span{font-size:13.5px;color:var(--ink2);font-weight:600}
+
+.marquee{overflow:hidden;padding:30px 0 10px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-row{display:flex;gap:18px;width:max-content;animation:mq 80s linear infinite}
+.mq-row.rev{animation-direction:reverse;margin-top:18px}
+.mq-row img{width:120px;aspect-ratio:3/4;object-fit:cover;border-radius:3px 8px 8px 3px;box-shadow:0 10px 20px -12px rgba(0,0,0,.4);display:block}
+.marquee:hover .mq-row{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* 3d book */
+.b3d{--w:260px;--t:16px;--sp:#555;width:var(--w);aspect-ratio:3/4;perspective:1600px;position:relative}
+.b3d::after{content:"";position:absolute;left:6%;right:0;bottom:-7%;height:9%;background:radial-gradient(closest-side,rgba(20,15,10,.35),transparent);filter:blur(5px);z-index:-1}
+.b3d-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateX(var(--rx,8deg)) rotateY(var(--ry,-24deg));transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.b3d-f,.b3d-b,.b3d-p,.b3d-s{position:absolute;backface-visibility:hidden}
+.b3d-f{inset:0;transform:translateZ(calc(var(--t)/2));border-radius:1px 6px 6px 1px;overflow:hidden;background:#ddd;container-type:inline-size}
+.b3d-f>img{display:block;width:100%;height:100%;object-fit:cover}
+.b3d-b{inset:0;transform:rotateY(180deg) translateZ(calc(var(--t)/2));background:var(--sp);border-radius:6px 1px 1px 6px;overflow:hidden}
+.b3d-b>img{display:block;width:100%;height:100%;object-fit:cover}
+.flip{display:inline-flex;background:var(--surface);border-radius:999px;padding:4px;box-shadow:var(--sh2)}
+.flip button{border:0;background:none;border-radius:999px;padding:8px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--ink2)}
+.flip button.on{background:var(--ink);color:#fff}
+.dcard .cover .bk{position:absolute;inset:0;opacity:0;transition:opacity .35s}
+.dcard:hover .cover .bk{opacity:1}
+@media (hover:none){.dcard .cover .bk{display:none}}
+.b3d-p{top:1.2%;height:97.6%;width:var(--t);left:calc(100% - var(--t)/2);transform:rotateY(90deg);background:repeating-linear-gradient(90deg,#fbfaf6 0 1px,#e3dfd6 1px 2px)}
+.b3d-s{top:0;height:100%;width:var(--t);left:calc(var(--t)/-2);transform:rotateY(-90deg);background:linear-gradient(90deg,rgba(0,0,0,.2),rgba(255,255,255,.12) 40%,rgba(0,0,0,.22)),var(--sp)}
+.b3d-s span{position:absolute;inset:0;writing-mode:vertical-rl;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);font:800 9px Manrope,sans-serif;letter-spacing:.1em;white-space:nowrap;overflow:hidden}
+
+/* flat cover */
+.cover{position:relative;aspect-ratio:3/4;border-radius:2px 8px 8px 2px;overflow:hidden;background:var(--soft);box-shadow:0 18px 30px -18px rgba(20,15,10,.5);container-type:inline-size}
+.cover>img{display:block;width:100%;height:100%;object-fit:cover}
+.cover.ph::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.25),rgba(255,255,255,.18) 2.5%,rgba(0,0,0,.08) 4.5%,transparent 9%);pointer-events:none}
+.pcov{position:absolute;inset:0;background:#2a2a2a}
+.pcov img{width:100%;height:100%;object-fit:cover;display:block}
+.pcov-t{position:absolute;left:0;right:0;bottom:0;padding:26cqw 8cqw 9cqw;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff}
+.pcov-t b{display:block;font:800 11cqw/1 Manrope,sans-serif;letter-spacing:-.04em}
+.pcov-t span{display:block;font:700 3.8cqw Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;opacity:.85;margin-top:3cqw}
+.pcov.empty{background:linear-gradient(160deg,#e9e6df,#d9d5cc);display:grid;place-items:center}
+.pcov.empty svg{width:30cqw;color:#a39d91}
+.pcov.empty .pcov-t{background:linear-gradient(transparent,rgba(0,0,0,.45))}
+
+/* how / bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.bx{background:var(--surface);border-radius:var(--r);padding:30px;box-shadow:var(--sh2);display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;min-height:260px}
+.bx .n{font-size:13px;font-weight:800;color:var(--ink2);display:flex;align-items:center;gap:8px}
+.bx .n i{width:26px;height:26px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-style:normal;color:var(--ink)}
+.bx h3{font-size:26px}
+.bx p{color:var(--ink2);font-size:15px;max-width:440px}
+.bx.c2{grid-column:span 2}.bx.c3{grid-column:span 3}.bx.c4{grid-column:span 4}.bx.c6{grid-column:span 6}
+.bx.dark{background:var(--ink);color:#fff}.bx.dark p,.bx.dark .n{color:rgba(255,255,255,.65)}.bx.dark .n i{background:rgba(255,255,255,.12);color:#fff}
+.bx.acc{background:var(--accent);color:#fff}.bx.acc p,.bx.acc .n{color:rgba(255,255,255,.85)}.bx.acc .n i{background:rgba(255,255,255,.2);color:#fff}
+.bx .vis{margin-top:auto;padding-top:14px}
+.minis{display:flex;gap:10px;align-items:end}
+.minis img{width:64px;aspect-ratio:3/4;object-fit:cover;border-radius:2px 5px 5px 2px;box-shadow:0 10px 16px -10px rgba(0,0,0,.5)}
+.minis img:nth-child(2){width:80px}
+.uploader{border:2px dashed rgba(255,255,255,.25);border-radius:16px;padding:18px;display:flex;gap:8px;flex-wrap:wrap}
+.uploader span{width:46px;height:46px;border-radius:9px;background:rgba(255,255,255,.12)}
+.uploader span:nth-child(3n){background:rgba(255,90,44,.65)}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px 14px}
+.lgrid figure{margin:0}
+.lgrid figcaption{font-size:12.5px;font-weight:700;margin-top:8px;color:var(--ink2)}
+.demo{position:relative;width:100%;background:#fff;border-radius:3px;box-shadow:0 8px 18px -12px rgba(0,0,0,.35);overflow:hidden}
+.demo::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(0,0,0,.12)}
+.demo i{position:absolute;border-radius:1.5px;background:linear-gradient(135deg,#ffb59c,#ff7a52)}
+.demo i:nth-child(2n){background:linear-gradient(135deg,#9fd0c6,#4f9e8f)}
+.demo i:nth-child(3n){background:linear-gradient(135deg,#a9b8ef,#6377cf)}
+
+/* catalog */
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:36px}
+.tabs{display:inline-flex;background:var(--surface);border-radius:999px;padding:5px;box-shadow:var(--sh2)}
+.tabs button{border:0;background:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14.5px;cursor:pointer;color:var(--ink2);display:flex;gap:8px;align-items:center;transition:.2s}
+.tabs button small{font-size:12px;opacity:.6}
+.tabs button.on{background:var(--ink);color:#fff}
+.search{margin-left:auto;position:relative}
+.search input{border:0;background:var(--surface);box-shadow:var(--sh2);border-radius:999px;padding:13px 18px 13px 44px;width:280px;outline:none;transition:box-shadow .15s}
+.search input:focus{box-shadow:0 0 0 2px var(--ink)}
+.search svg{position:absolute;left:16px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--ink2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:40px 26px}
+.dcard{border:0;background:none;padding:0;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:14px;perspective:900px}
+.dcard .cover{transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.dcard:hover .cover{transform:translateY(-8px) rotateY(-10deg);box-shadow:0 34px 44px -22px rgba(20,15,10,.55)}
+.dcard .meta{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.dcard h3{font-size:17px;letter-spacing:-.02em}
+.dcard span{font-size:13px;color:var(--ink2);font-weight:600}
+.dcard .pr{font-size:13px;font-weight:700;white-space:nowrap}
+.empty-msg{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--ink2)}
+
+/* pricing */
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pcard{background:var(--surface);border-radius:var(--r);padding:32px 30px;box-shadow:var(--sh2);display:flex;flex-direction:column;gap:6px;position:relative}
+.pcard.pop{background:var(--ink);color:#fff}
+.pcard.pop .muted{color:rgba(255,255,255,.6)}
+.pcard .pill{position:absolute;top:24px;right:24px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px}
+.pcard .sz{display:flex;align-items:end;height:86px;margin-bottom:18px}
+.pcard .sz i{display:block;width:calc(var(--s)*1px);aspect-ratio:3/4;border-radius:2px 5px 5px 2px;background:linear-gradient(135deg,#ffb59c,var(--accent))}
+.pcard h3{font-size:22px}
+.pcard .price{font-size:44px;font-weight:800;letter-spacing:-.045em;margin:12px 0 0}
+.pcard ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px;font-size:14.5px}
+.pcard li{display:flex;gap:10px;align-items:center}
+.pcard li::before{content:"✓";font-weight:800;color:var(--accent)}
+.extras{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.extras div{background:var(--surface);border-radius:18px;padding:20px 22px;box-shadow:var(--sh2);font-size:14px;color:var(--ink2)}
+.extras b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+
+/* faq */
+.faq-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:start}
+.faq{display:grid;gap:10px}
+.faq details{background:var(--surface);border-radius:18px;box-shadow:var(--sh2);transition:.2s}
+.faq summary{cursor:pointer;list-style:none;padding:22px 24px;font-weight:700;font-size:16px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";width:30px;height:30px;flex:none;border-radius:50%;background:var(--soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f1113' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 6v12M6 12h12'/%3E%3C/svg%3E") center/14px no-repeat;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 24px 22px;color:var(--ink2);font-size:15px}
+
+.band{background:var(--ink);color:#fff;border-radius:32px;padding:70px 60px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center;overflow:hidden;position:relative}
+.band h2{font-size:clamp(36px,4.6vw,64px);letter-spacing:-.05em}
+.band p{color:rgba(255,255,255,.65);margin:16px 0 30px;font-size:17px}
+.band .covers{display:flex;gap:16px;justify-content:center}
+.band .covers img{width:150px;aspect-ratio:3/4;object-fit:cover;border-radius:2px 8px 8px 2px;box-shadow:0 30px 40px -20px rgba(0,0,0,.8);transform:rotate(var(--rot)) translateY(var(--y,0))}
+
+footer{padding:60px 0 50px;font-size:14px;color:var(--ink2)}
+footer .wrap{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px}
+footer h4{margin:0 0 12px;color:var(--ink);font-size:14px;letter-spacing:0}
+footer .note{grid-column:1/-1;font-size:12.5px;border-top:1px solid var(--line);padding-top:20px}
+
+/* overlays */
+.ov{position:fixed;inset:0;z-index:60;background:var(--bg);overflow:auto;display:none;animation:fade .25s}
+.ov.on{display:block}
+@keyframes fade{from{opacity:0}}
+.ov-h{position:sticky;top:0;z-index:5;padding:12px}
+.ov-h .hd-in{gap:20px}
+.x{margin-left:auto;border:0;background:var(--soft);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:20px;display:grid;place-items:center;flex:none;transition:.15s}
+.x:hover{background:var(--line)}
+
+.dz{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:20px 20px 130px;max-width:1240px;margin:0 auto}
+.dz-prev{position:sticky;top:96px;align-self:start;background:var(--soft);border-radius:32px;padding:60px 30px 28px;display:flex;flex-direction:column;align-items:center;gap:30px;min-height:600px;justify-content:center}
+.dz-prev .b3d{--w:min(320px,62vw)}
+.rot{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;color:var(--ink2);width:100%;max-width:340px}
+.rot input{flex:1;accent-color:var(--ink)}
+.dz-note{font-size:13px;color:var(--ink2);text-align:center;max-width:360px}
+.dz-opt h2{font-size:clamp(38px,4.4vw,58px);letter-spacing:-.05em;margin:8px 0 10px}
+.opt{margin-top:28px}
+.lbl{display:block;font-weight:800;font-size:14px;margin-bottom:12px}
+.lbl small{font-weight:600;color:var(--ink2);margin-left:6px;font-size:13px}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.seg button{border:0;background:var(--surface);border-radius:16px;padding:14px 16px;cursor:pointer;box-shadow:inset 0 0 0 1.5px var(--line);text-align:left;display:flex;flex-direction:column;gap:2px;transition:.15s}
+.seg button:hover{box-shadow:inset 0 0 0 1.5px var(--ink2)}
+.seg button b{font-size:14.5px}
+.seg button small{font-size:12.5px;color:var(--ink2);font-weight:600}
+.seg button.on{box-shadow:inset 0 0 0 2px var(--ink);background:#fff}
+.seg.pgn{grid-template-columns:repeat(5,1fr)}
+.seg.pgn button{text-align:center;align-items:center;padding:12px 6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-weight:800;font-size:13.5px}
+.field small{color:var(--ink2);font-size:12.5px}
+.inp{width:100%;border:0;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line);border-radius:14px;padding:13px 15px;outline:none;transition:box-shadow .15s}
+.inp:focus{box-shadow:inset 0 0 0 2px var(--ink)}
+.inp.err{box-shadow:inset 0 0 0 2px var(--bad)}
+.qty{display:inline-flex;align-items:center;background:var(--surface);border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--line)}
+.qty button{border:0;background:none;width:44px;height:44px;font-size:18px;cursor:pointer;font-weight:700}
+.qty span{min-width:30px;text-align:center;font-weight:800}
+.dz-bar{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px);z-index:6}
+.dz-bar .bar-in{max-width:1216px;margin:0 auto;display:flex;align-items:center;gap:20px;padding:12px 12px 12px 28px;background:var(--ink);color:#fff;border-radius:999px;box-shadow:0 20px 40px -20px rgba(0,0,0,.6)}
+.dz-bar .tot{font-size:26px;font-weight:800;letter-spacing:-.04em}
+.dz-bar .brk{font-size:12.5px;color:rgba(255,255,255,.6);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dz-bar .btn{margin-left:auto}
+
+/* drawer */
+.bd{position:fixed;inset:0;z-index:55;background:rgba(15,17,19,.4);opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(2px)}
+.bd.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:12px;right:12px;bottom:12px;z-index:56;width:min(440px,calc(100% - 24px));background:var(--bg);border-radius:28px;transform:translateX(110%);transition:transform .35s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--sh)}
+.drawer.on{transform:none}
+.drawer-h{display:flex;align-items:center;padding:20px 20px 14px 26px}
+.drawer-h h3{font-size:24px}
+.drawer-b{flex:1;overflow:auto;padding:6px 20px 20px;display:grid;gap:12px;align-content:start}
+.drawer-f{padding:20px 22px 22px;display:grid;gap:12px;background:var(--surface);border-top:1px solid var(--line)}
+.ci{display:grid;grid-template-columns:72px 1fr;gap:16px;background:var(--surface);border-radius:20px;padding:14px;box-shadow:var(--sh2)}
+.ci .cover{width:72px}
+.ci h4{font-size:16px;letter-spacing:-.02em}
+.ci .o{font-size:12.5px;color:var(--ink2);line-height:1.45;margin:4px 0 10px}
+.ci .row{display:flex;align-items:center;gap:14px;font-size:13px}
+.ci .row b{margin-left:auto;font-size:15px}
+.sumrow{display:flex;justify-content:space-between;font-size:14.5px}
+.sumrow.big{font-size:20px;font-weight:800;letter-spacing:-.02em}
+
+/* checkout */
+.stepper{display:flex;gap:8px;align-items:center;font-size:13.5px;font-weight:700;color:var(--ink2)}
+.stepper span{display:flex;align-items:center;gap:8px}
+.stepper span i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:var(--soft);font-size:12px}
+.stepper span.on{color:var(--ink)}.stepper span.on i{background:var(--ink);color:#fff}
+.stepper span.done i{background:var(--accent);color:#fff}
+.stepper em{width:24px;height:1.5px;background:var(--line)}
+.co{max-width:1040px;margin:0 auto;padding:30px 20px 90px}
+.co h2{font-size:clamp(32px,4vw,48px);letter-spacing:-.045em;margin-bottom:10px}
+.pcard2{background:var(--surface);border-radius:var(--r);box-shadow:var(--sh2);padding:26px;margin-top:22px}
+.pc-top{display:grid;grid-template-columns:80px 1fr auto;gap:20px;align-items:center}
+.pc-top .cover{width:80px}
+.pc-top h3{font-size:22px}
+.cnt{font-weight:800;font-size:15px;text-align:right}
+.cnt small{display:block;font-weight:600;color:var(--ink2);font-size:12.5px}
+.cnt.ok{color:var(--ok)}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px dashed var(--line);border-radius:20px;padding:32px;margin-top:20px;cursor:pointer;text-align:center;transition:.15s;background:var(--bg)}
+.drop:hover,.drop.over{border-color:var(--ink);background:#fff}
+.drop .ic{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;margin-bottom:6px}
+.drop svg{width:24px;height:24px}
+.drop input{display:none}
+.drop b{font-size:16px}
+.drop small{color:var(--ink2)}
+.pc-acts{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:14px}
+.pc-cov{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13.5px}
+.seg-mini{display:inline-flex;background:var(--soft);border-radius:999px;padding:4px}
+.seg-mini button{border:0;background:none;border-radius:999px;padding:7px 14px;font-weight:700;font-size:13px;cursor:pointer;color:var(--ink2)}
+.seg-mini button.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh2)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;margin-top:14px}
+.th{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--soft)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th button{position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(15,17,19,.6);color:#fff;cursor:pointer;font-size:12px;line-height:1;display:grid;place-items:center;opacity:0;transition:.15s}
+.th:hover button,.th.cv .st{opacity:1}
+.th .st{left:5px;right:auto}
+.th.cv{box-shadow:0 0 0 3px var(--gold)}
+.th.cv .st{background:var(--gold)}
+.th i{position:absolute;left:0;right:0;bottom:0;background:rgba(210,60,44,.9);color:#fff;font-size:10px;font-style:normal;font-weight:700;text-align:center;padding:2px}
+.th.bad{display:grid;place-items:center;font-size:10px;color:var(--bad);text-align:center;padding:4px}
+@media (hover:none){.th button{opacity:1}}
+.chk{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
+.chk input{width:19px;height:19px;accent-color:var(--ink)}
+.warn{background:#fff1ea;color:#9a3b17;border-radius:14px;padding:12px 16px;font-size:14px;margin-top:12px}
+.warn.info{background:#e9f4ee;color:#1d6a3e}
+
+.spv{margin-top:20px;background:var(--soft);border-radius:22px;padding:24px}
+.spv-info{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;margin-bottom:18px;font-size:14px}
+.spv-info b{color:var(--ink)}
+.spv .sp{max-width:640px;margin:0 auto}
+.spv-cv{max-width:230px;margin:0 auto}
+.spv-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px;font-weight:700;font-size:14px}
+.spv-nav button{border:0;background:var(--surface);width:40px;height:40px;border-radius:50%;cursor:pointer;box-shadow:var(--sh2);font-size:18px}
+.spv-nav button:disabled{opacity:.35;cursor:default}
+.spv-all{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px 14px}
+.spv-all figure{margin:0}
+.spv-all .sp{box-shadow:var(--sh2)}
+.spv-all .cover{width:52%;margin:0 auto}
+.spv-all figcaption{font-size:12px;color:var(--ink2);text-align:center;margin-top:6px;font-weight:600}
+.sp{position:relative;width:100%;aspect-ratio:3/2;background:#fff;box-shadow:var(--sh);border-radius:2px;overflow:hidden}
+.sp::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:7%;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(0,0,0,.08) 46%,rgba(0,0,0,.18) 50%,rgba(0,0,0,.08) 54%,transparent);pointer-events:none;z-index:3}
+.sp .cell{position:absolute;overflow:hidden;background:#eee}
+.sp .cell img{width:100%;height:100%;object-fit:cover;display:block}
+
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.form .full{grid-column:1/-1}
+.radios{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.radio{border:0;background:var(--surface);border-radius:18px;padding:16px 18px;text-align:left;cursor:pointer;box-shadow:inset 0 0 0 1.5px var(--line);transition:.15s}
+.radio.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.radio b{display:block;font-size:15px}
+.radio small{color:var(--ink2);font-size:12.5px}
+.co-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start}
+.summary{background:var(--surface);border-radius:var(--r);box-shadow:var(--sh2);padding:24px;display:grid;gap:12px;position:sticky;top:96px}
+.summary h3{font-size:20px;margin-bottom:4px}
+.sline{display:flex;gap:12px;font-size:14px;align-items:center}
+.sline .cover{width:42px;flex:none}
+.sline b{margin-left:auto;white-space:nowrap}
+.hr{height:1px;background:var(--line);margin:4px 0}
+.co-nav{display:flex;justify-content:space-between;align-items:center;margin-top:30px;gap:12px}
+.err-msg{color:var(--bad);font-weight:700;font-size:14px}
+.done{text-align:center;max-width:640px;margin:0 auto;padding:40px 20px 90px}
+.done .ok-ic{width:80px;height:80px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;margin:0 auto 24px}
+.done h2{font-size:clamp(34px,5vw,52px);letter-spacing:-.05em}
+.ono{display:inline-block;margin:18px 0;font-family:ui-monospace,Consolas,monospace;font-size:22px;font-weight:700;background:var(--surface);padding:12px 24px;border-radius:14px;box-shadow:var(--sh2);letter-spacing:.05em}
+.paybox{background:var(--surface);border-radius:var(--r);box-shadow:var(--sh2);padding:26px;margin:24px 0;display:grid;grid-template-columns:auto 1fr;gap:24px;text-align:left;align-items:center}
+.paybox svg{width:150px;height:150px}
+.paybox dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.paybox dt{color:var(--ink2)}
+.paybox dd{margin:0;font-weight:700}
+
+.modal{position:fixed;inset:0;z-index:70;display:none;place-items:center;padding:20px;background:rgba(15,17,19,.45);backdrop-filter:blur(2px)}
+.modal.on{display:grid;animation:fade .2s}
+.modal-c{background:var(--bg);border-radius:28px;padding:32px;width:min(540px,100%);max-height:90vh;overflow:auto;position:relative}
+.modal-c .x{position:absolute;top:18px;right:18px}
+.modal-c h3{font-size:28px;margin-bottom:8px}
+.tl{list-style:none;padding:0;margin:20px 0 0}
+.tl li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding-bottom:18px;position:relative;font-size:14px}
+.tl li::before{content:"";position:absolute;left:13px;top:26px;bottom:2px;width:2px;background:var(--line)}
+.tl li:last-child::before{display:none}
+.tl li i{width:28px;height:28px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;color:var(--ink2)}
+.tl li.on i{background:var(--ink);color:#fff}
+.tl li.dn i{background:var(--accent);color:#fff}
+.tl li small{display:block;color:var(--ink2)}
+
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.3s;z-index:90;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* sections rest visible; they only get a short lift once scrolled into view */
+.reveal.in{animation:rise .7s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{transform:translateY(18px)}}
+
+@media (max-width:1020px){
+  .hero .wrap{grid-template-columns:1fr}
+  .fan{height:440px;max-width:560px;width:100%;margin:0 auto}
+  .fan .b3d{--w:190px}.fan .b3d:nth-child(2){--w:220px}
+  .bx.c2,.bx.c3,.bx.c4{grid-column:span 6}
+  .prices{grid-template-columns:1fr}
+  .extras{grid-template-columns:1fr 1fr}
+  .faq-wrap{grid-template-columns:1fr;gap:30px}
+  .dz{grid-template-columns:1fr;gap:24px}
+  .dz-prev{position:relative;top:0;min-height:0;padding:50px 20px 24px}
+  .band{grid-template-columns:1fr;padding:50px 30px}
+  .co-grid{grid-template-columns:1fr}
+  .summary{position:relative;top:0}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .nav{display:none}
+  section{padding:70px 0}
+  .hd-in{padding-left:16px;gap:10px}
+  .icon-btn .t{display:none}
+  .stats{gap:26px}
+  .search{margin-left:0;width:100%}.search input{width:100%}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:30px 16px}
+  .stepper b{display:none}
+  .form,.two{grid-template-columns:1fr}
+  .radios{grid-template-columns:1fr}
+  .pc-top{grid-template-columns:60px 1fr}
+  .pc-top .cover{width:60px}
+  .pc-top .cnt{grid-column:1/-1;text-align:left}
+  .paybox{grid-template-columns:1fr;justify-items:center}
+  .dz-bar .brk{display:none}
+  .dz-bar .bar-in{padding-left:22px}
+  .extras{grid-template-columns:1fr}
+  .seg.pgn{grid-template-columns:repeat(3,1fr)}
+  .band .covers img{width:100px}
+  .dcard .meta{flex-direction:column;gap:2px}
+  .dcard h3{font-size:16px}
+  .bx{padding:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-in">
+    <button class="logo" data-go="top" aria-label="Нүүр хуудас"><b><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5C5.5 5 9 5 12 7c3-2 6.5-2 9-.5V19c-2.5-1.5-6-1.5-9 .5-3-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/></svg></b>Аян ном</button>
+    <nav class="nav">
+      <a href="#catalog">Загварууд</a>
+      <a href="#how">Хэрхэн</a>
+      <a href="#pricing">Үнэ</a>
+      <a href="#faq">Асуулт</a>
+    </nav>
+    <div class="hd-r">
+      <button class="icon-btn" id="trackBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg><span class="t">Захиалга шалгах</span></button>
+      <button class="icon-btn dark" id="cartBtn" aria-label="Сагс"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1.2 11H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="t">Сагс</span><span class="badge" id="cartN"></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="chip-label"><i></i>Улаанбаатар, 21 аймаг · Дэлхийн 20 хот</span>
+        <h1>Аяллаа<br><span>ном болго.</span></h1>
+        <p class="lead">Зургуудаа оруулахад л хангалттай. Хамгийн гоё зургийг тань сонгож, бусдыг нь хуудас бүрт автоматаар байрлуулан хатуу хавтастай ном болгоно.</p>
+        <div class="cta">
+          <a class="btn acc" href="#catalog">Загвараа сонгох <span class="ar">→</span></a>
+          <a class="btn ghost" href="#how">Хэрхэн ажилладаг вэ</a>
+        </div>
+        <div class="stats">
+          <div><b>44</b><span>нүүр, арын хуудастай загвар</span></div>
+          <div><b>24–72</b><span>хуудас</span></div>
+          <div><b>PDF</b><span>хэвлэхээс өмнө баталгаажуулна</span></div>
+        </div>
+      </div>
+      <div class="fan" id="heroFan"></div>
+    </div>
+    <div class="marquee" aria-hidden="true"><div class="mq-row" id="mq1"></div><div class="mq-row rev" id="mq2"></div></div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-h reveal">
+        <div><div class="kicker">Хэрхэн ажилладаг</div><h2>Зургаа оруул.<br>Ном өөрөө бүтнэ.</h2></div>
+        <p>Хуудас бүрийг гараараа зохиох шаардлагагүй. Систем зургийн тань босоо, хэвтээ хэлбэр, чанар, авсан цагийг харгалзан номыг зохионо.</p>
+      </div>
+      <div class="bento">
+        <div class="bx c2 reveal"><div class="n"><i>1</i>Алхам</div><h3>Нүүрээ сонго</h3><p>Улаанбаатар, 21 аймаг, дэлхийн 20 хотын загвараас аялсан газрынхаа нүүрийг сонгоно. Загвар бүр өөрийн арын хуудастай.</p><div class="vis minis" id="bxMinis"></div></div>
+        <div class="bx c2 dark reveal"><div class="n"><i>2</i>Алхам</div><h3>Зургаа оруул</h3><p>Утас, компьютерээсээ олон зургийг нэг дор чирж оруулна. Чанар муутай зургийг анхааруулна.</p><div class="vis uploader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+        <div class="bx c2 acc reveal"><div class="n"><i>3</i>Алхам</div><h3>Ном өөрөө бүтнэ</h3><p>Хамгийн гоё зураг нүүрэнд гарч, бусад нь хуудсанд байрлана. PDF-ээр шалгаж зөвшөөрсний дараа хэвлэж, хаягаар тань хүргэнэ.</p></div>
+        <div class="bx c6 reveal"><div class="n">Автомат зохиогч</div><h3>Хуудас бүрт тохирох загвар</h3><p>Хамгийн гоё зураг нүүрэнд гарна. Бусад зургийг авсан цагаар нь дараалуулж, дараах загваруудаар байрлуулна.</p><div class="vis lgrid" id="layoutDemos"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalog" style="padding-top:40px">
+    <div class="wrap">
+      <div class="sec-h reveal">
+        <div><div class="kicker">Загварууд</div><h2>Хаана аялсан бэ?</h2></div>
+        <p>Нүүрээ дарж номоо тохируулна уу. Жагсаалтад байхгүй газар байвал бидэнд хэлээрэй.</p>
+      </div>
+      <div class="tools">
+        <div class="tabs" id="regTabs"></div>
+        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="Аймаг, хот, улс хайх…" aria-label="Хайх"></label>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="sec-h reveal">
+        <div><div class="kicker">Үнэ</div><h2>Энгийн, ил тод.</h2></div>
+        <p>Үнэ нь 24 хуудастай, хатуу хавтастай номынх. 12 хуудас нэмэх бүрт бага зэрэг нэмэгдэнэ.</p>
+      </div>
+      <div class="prices" id="priceCards"></div>
+      <div class="extras" id="extras"></div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:20px">
+    <div class="wrap faq-wrap">
+      <div class="reveal"><div class="kicker">Түгээмэл асуулт</div><h2 style="font-size:clamp(34px,4.6vw,60px)">Асуулт байна уу?</h2><p class="muted" style="margin-top:16px;max-width:340px">Хариултаа олохгүй бол бидэнтэй холбогдоорой: [утас оруулна]</p></div>
+      <div class="faq">
+        <details><summary>Хэдэн хоногт бэлэн болох вэ?</summary><p>Хуудсуудыг та PDF-ээр баталгаажуулснаас хойш 5–7 ажлын өдөрт хэвлэнэ. Улаанбаатарт 1–2 өдөр, орон нутагт 2–5 өдөрт хүргэнэ.</p></details>
+        <details><summary>Хэдэн зураг оруулах вэ?</summary><p>Хамгийн багадаа 10 зураг. 24 хуудастай номд 24–72 зураг санал болгоно. Дэлгэц бүрт 1–5 зураг байрлана.</p></details>
+        <details><summary>Зургуудыг хэрхэн байрлуулах вэ?</summary><p>Систем зургийг тань авсан цагаар нь дараалуулж, хурц, өнгөлөг, гэрэл сайтай зургийг нүүрэнд санал болгоно. Хуудас бүрт зургийн босоо, хэвтээ хэлбэрт тохирох загварыг сонгоно. Үр дүнг шууд харж, «Дахин зохиох» товчоор өөрчилж болно.</p></details>
+        <details><summary>Утсаар авсан зураг хэвлэхэд хангалттай юу?</summary><p>Ихэнх ухаалаг утасны зураг хангалттай. 1.2 мегапикселээс бага зургийг бид тэмдэглэж анхааруулна. Мессенжерээр дамжсан биш, анхны файлыг оруулаарай.</p></details>
+        <details><summary>Нүүрэнд өөрийн зургаа тавьж болох уу?</summary><p>Болно. «Миний хамгийн гоё зураг» гэж сонговол систем нүүрний зургийг сонгоно, та ★ дарж өөрөө ч сольж болно. Гарчиг, дэд бичгээ хүссэнээрээ бичнэ.</p></details>
+        <details><summary>Зургаа дараа нь илгээж болох уу?</summary><p>Болно. Захиалга өгөхдөө «Зургаа дараа илгээнэ» гэж сонговол зураг илгээх холбоосыг утас, и-мэйлээр тань явуулна.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-bottom:40px">
+    <div class="band reveal">
+      <div>
+        <h2>Дурсамжаа утсандаа мартаж орхихгүй.</h2>
+        <p>Аялсан газрынхаа нүүрийг сонгоод, номоо одоо бүтээж эхлээрэй.</p>
+        <a class="btn white" href="#catalog">Эхлэх <span class="ar">→</span></a>
+      </div>
+      <div class="covers" id="bandCovers"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><div class="logo" style="margin-bottom:12px">Аян ном</div><p>Монгол болон дэлхийн өнцөг булан бүрт хийсэн аяллаа хадгалах фото ном.</p></div>
+    <div><h4>Холбоо барих</h4><p>Утас: [оруулна]<br>И-мэйл: [оруулна]<br>Хаяг: [оруулна]</p></div>
+    <div><h4>Сошиал</h4><p>Facebook: [оруулна]<br>Instagram: [оруулна]</p></div>
+    <div class="note">Жишээ хувилбар: үнэ, хүргэлтийн нөхцөл, төлбөрийн мэдээлэл түр утгатай. Захиалга зөвхөн энэ хөтчид хадгалагдана, зураг сервер рүү илгээгдэхгүй.</div>
+  </div>
+</footer>
+
+<!-- designer -->
+<div class="ov" id="dz" role="dialog" aria-modal="true" aria-label="Ном тохируулах">
+  <div class="ov-h"><div class="hd-in"><div class="logo">Аян ном</div><span class="muted" style="font-weight:700;font-size:14px">Ном тохируулах</span><button class="x" data-close="dz" aria-label="Хаах">×</button></div></div>
+  <div class="dz" id="dzBody"></div>
+  <div class="dz-bar"><div class="bar-in"><div style="min-width:0"><div class="tot" id="dzTot"></div><div class="brk" id="dzBrk"></div></div><button class="btn acc" id="dzAdd">Сагсанд нэмэх</button></div></div>
+</div>
+
+<!-- checkout -->
+<div class="ov" id="co" role="dialog" aria-modal="true" aria-label="Захиалга">
+  <div class="ov-h"><div class="hd-in"><div class="logo">Аян ном</div><div class="stepper" id="coSteps"></div><button class="x" data-close="co" aria-label="Хаах">×</button></div></div>
+  <div id="coBody"></div>
+</div>
+
+<!-- cart drawer -->
+<div class="bd" id="bd"></div>
+<aside class="drawer" id="drawer" aria-label="Сагс">
+  <div class="drawer-h"><h3>Сагс</h3><button class="x" id="drawerX" aria-label="Хаах">×</button></div>
+  <div class="drawer-b" id="drawerB"></div>
+  <div class="drawer-f" id="drawerF"></div>
+</aside>
+
+<!-- tracking -->
+<div class="modal" id="trk"><div class="modal-c">
+  <button class="x" data-close="trk" aria-label="Хаах">×</button>
+  <h3>Захиалга шалгах</h3>
+  <p class="muted" style="font-size:14.5px">Захиалгын дугаар, утасны дугаараа оруулна уу.</p>
+  <div class="form">
+    <div class="field"><label for="tNo">Захиалгын дугаар</label><input class="inp" id="tNo" placeholder="AY261007-1234"></div>
+    <div class="field"><label for="tPh">Утас</label><input class="inp" id="tPh" inputmode="numeric" maxlength="8" placeholder="99112233"></div>
+  </div>
+  <div style="margin-top:18px;display:flex;gap:12px;align-items:center"><button class="btn" id="tGo">Шалгах</button><span class="err-msg" id="tErr"></span></div>
+  <div id="tRes"></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>Math.round(n).toLocaleString('en-US')+'₮';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let _u=0; const uid=()=>'k'+(++_u).toString(36);
+function rng(seed){let a=7;for(const c of seed)a=(Math.imul(a,31)+c.charCodeAt(0))|0;return()=>{a=(a+0x6D2B79F5)|0;let t=Math.imul(a^a>>>15,1|a);t=(t+Math.imul(t^t>>>7,61|t))^t;return((t^t>>>14)>>>0)/4294967296}}
+const hx=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+function mix(a,b,t){const A=hx(a),B=hx(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')}
+function load(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2200)}
+
+/* ---------- catalogue: the user's cover artwork ---------- */
+// The standalone build embeds every image as window.IMGDATA (path → base64 WebP); turn those into
+// short blob: URLs once. Without it, images load from the png/, World/ and Back/ folders.
+const R=(()=>{const D=window.IMGDATA,cache={};if(!D)return p=>p;
+  return p=>{if(!D[p])return p;if(!cache[p]){const s=atob(D[p]),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);cache[p]=URL.createObjectURL(new Blob([a],{type:'image/webp'}))}return cache[p]}})();
+const MN=[
+  ['arkhangai','Архангай','Цэцэрлэг','#3a7057'],['bayan-ulgii','Баян-Өлгий','Өлгий','#375f84'],['bayankhongor','Баянхонгор','Баянхонгор','#c45c46'],
+  ['bulgan','Булган','Булган','#47627a'],['govi-altai','Говь-Алтай','Алтай','#da7e65'],['govisumber','Говьсүмбэр','Чойр','#6f9a86'],
+  ['darkhan-uul','Дархан-Уул','Дархан','#35515c'],['dornogovi','Дорноговь','Сайншанд','#d98a4f'],['dornod','Дорнод','Чойбалсан','#6f9558'],
+  ['dundgovi','Дундговь','Мандалговь','#4e7e9d'],['zavkhan','Завхан','Улиастай','#1f485f'],['orkhon','Орхон','Эрдэнэт','#b87436'],
+  ['uvurkhangai','Өвөрхангай','Арвайхээр','#7e3831'],['umnugovi','Өмнөговь','Даланзадгад','#e08a3a'],['sukhbaatar','Сүхбаатар','Баруун-Урт','#c9433a'],
+  ['selenge','Сэлэнгэ','Сүхбаатар','#359d91'],['tuv','Төв','Зуунмод','#334866'],['uvs','Увс','Улаангом','#5698bf'],
+  ['khovd','Ховд','Ховд','#386f57'],['khuvsgul','Хөвсгөл','Мөрөн','#0f7bb4'],['khentii','Хэнтий','Чингис хот','#6e5f76']
+].map(([f,name,center,sp],i)=>{const base=`${String(i+1).padStart(2,'0')}_${f}`;return{id:'mn-'+f,name,reg:'mn',img:`png/${base}.png`,back:`Back/${base}_back.png`,sp,sub:'Аймгийн төв: '+center,tags:f}});
+const UB=[['gandan','Гандан хийд','#8c3c4f'],['square','Сүхбаатарын талбай','#3877b8'],['zaisan','Зайсан толгой','#e3865c']]
+  .map(([f,sub,sp])=>({id:'ub-'+f,name:'Улаанбаатар',reg:'mn',img:`png/ulaanbaatar_${f}.png`,back:`Back/ulaanbaatar_${f}_back.png`,sp,sub,tags:'ulaanbaatar ub нийслэл '+f}));
+const WORLD=[
+  ['seoul','Сөүл','Өмнөд Солонгос','#dd4a4d'],['busan','Бусан','Өмнөд Солонгос','#0f97c3'],['jeju','Жэжү','Өмнөд Солонгос','#359d91'],
+  ['tokyo','Токио','Япон','#ea625b'],['osaka','Осака','Япон','#314e5a'],['beijing','Бээжин','Хятад','#9e1316'],
+  ['shanghai','Шанхай','Хятад','#64279c'],['hong_kong','Хонконг','Хятад','#113a4f'],['bangkok','Бангкок','Тайланд','#ef820f'],
+  ['phuket','Пхукет','Тайланд','#0fa5c4'],['nha_trang','Нячанг','Вьетнам','#f2870f'],['da_nang','Дананг','Вьетнам','#83b725'],
+  ['bali','Бали','Индонез','#e07458'],['singapore','Сингапур','Сингапур','#e84f74'],['dubai','Дубай','Арабын Нэгдсэн Эмират','#eaa26a'],
+  ['istanbul','Истанбул','Турк','#335789'],['baikal','Байгал нуур','Орос','#5096e8'],['almaty','Алматы','Казахстан','#466183'],
+  ['paris','Парис','Франц','#72607e'],['new_york','Нью-Йорк','АНУ','#18728c']
+].map(([f,name,country,sp],i)=>{const base=`${String(i+1).padStart(2,'0')}_${f}`;return{id:'w-'+f,name,reg:'world',img:`World/${base}.png`,back:`Back/${base}_back.png`,sp,sub:country,tags:f.replace('_',' ')}});
+const DEST=[...UB,...MN,...WORLD].map(d=>({...d,file:d.img,backFile:d.back,img:R(d.img),back:R(d.back)})), DMAP=Object.fromEntries(DEST.map(d=>[d.id,d]));
+const REG={mn:'Монгол',world:'Гадаад'};
+
+const SIZES=[
+  {id:'p15',name:'15×20 см',base:69000,per12:12000,s:30,note:'Гарт баригдахуйц, бэлэгт тохиромжтой'},
+  {id:'p21',name:'21×28 см',base:99000,per12:18000,s:42,note:'Хамгийн их сонгогддог',pop:1},
+  {id:'p24',name:'24×32 см',base:129000,per12:24000,s:50,note:'Том, зочны ширээний ном'}
+];
+const PAGES=[24,36,48,60,72];
+const FIN=[{id:'matt',name:'Матт',add:0,d:'Гэрэл ойлгохгүй'},{id:'gloss',name:'Гялгар',add:0,d:'Өнгө тод'},{id:'soft',name:'Soft-touch',add:12000,d:'Хилэн мэдрэмжтэй'}];
+const PAPER=[{id:'std',name:'Стандарт',add:0,d:'170 гр, хагас гялгар'},{id:'flat',name:'Lay-flat',add:30000,d:'250 гр, бүтэн дэлгэгдэнэ'}];
+const GIFT=15000, MINPH=10;
+const DIST=['Баянгол','Баянзүрх','Сонгинохайрхан','Сүхбаатар','Хан-Уул','Чингэлтэй','Налайх','Багануур','Багахангай'];
+const AIMAG=['Архангай','Баян-Өлгий','Баянхонгор','Булган','Говь-Алтай','Говьсүмбэр','Дархан-Уул','Дорноговь','Дорнод','Дундговь','Завхан','Орхон','Өвөрхангай','Өмнөговь','Сүхбаатар','Сэлэнгэ','Төв','Увс','Ховд','Хөвсгөл','Хэнтий'];
+const DELIV={ub:{name:'Улаанбаатарт хүргэх',d:'1–2 өдөр · 150,000₮-өөс дээш үнэгүй',fee:s=>s>=150000?0:6000},aimag:{name:'Орон нутаг руу',d:'2–5 өдөр · унаанд тавина',fee:()=>12000},pick:{name:'Очиж авах',d:'Үнэгүй · [хаяг оруулна]',fee:()=>0}};
+const STATUS=['Захиалга хүлээн авсан','Төлбөр баталгаажсан','Хуудсыг PDF-ээр баталгаажуулах','Хэвлэгдэж байна','Хүргэлтэнд гарсан','Хүргэгдсэн'];
+
+/* ---------- covers & books ---------- */
+const PH_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="15.5" cy="9.5" r="1.6"/><path d="M4 17l5-5 4 4 2-2 5 4"/></svg>';
+function coverArt(c,ph){
+  const d=DMAP[c.dest];
+  if(c.cov==='photo'){
+    const t=`<div class="pcov-t"><b>${esc(c.title)}</b><span>${esc(c.sub)}</span></div>`;
+    return ph?`<div class="pcov"><img src="${ph.url}" alt="" style="object-position:${ph.fx}% ${ph.fy}%">${t}</div>`:`<div class="pcov empty">${PH_ICON}${t}</div>`;
+  }
+  return`<img src="${d.img}" alt="${esc(d.name)}" loading="lazy" decoding="async">`;
+}
+const coverBox=(c,ph)=>`<div class="cover${c.cov==='photo'?' ph':''}">${coverArt(c,ph)}</div>`;
+const backBox=c=>`<div class="cover"><img src="${DMAP[c.dest].back}" alt="${esc(DMAP[c.dest].name)} — ар хуудас" loading="lazy" decoding="async"></div>`;
+function book3d(c,ph){return`<div class="b3d-in" style="--t:${Math.round(9+c.pages/6)}px"><div class="b3d-b"><img src="${DMAP[c.dest].back}" alt="" loading="lazy" decoding="async"></div><div class="b3d-s"><span>${esc(c.title)}</span></div><div class="b3d-p"></div><div class="b3d-f">${coverArt(c,ph)}</div></div>`}
+const setSpine=(el,c)=>el.style.setProperty('--sp',mix(DMAP[c.dest].sp,'#000000',.12));
+
+/* ---------- pricing ---------- */
+const defCfg=id=>({dest:id,cov:'design',title:DMAP[id].name,sub:'2026 · Аяллын дурсамж',size:'p21',pages:24,fin:'matt',paper:'std',gift:false,qty:1});
+const S_=id=>SIZES.find(s=>s.id===id)||SIZES[1], F_=id=>FIN.find(s=>s.id===id)||FIN[0], P_=id=>PAPER.find(s=>s.id===id)||PAPER[0];
+const unit=c=>{const s=S_(c.size);return s.base+(c.pages-24)/12*s.per12+F_(c.fin).add+P_(c.paper).add+(c.gift?GIFT:0)};
+const lineTot=c=>unit(c)*c.qty;
+const optLine=c=>`${c.cov==='photo'?'Өөрийн зураг нүүрэнд':'Загварын нүүр'} · ${S_(c.size).name} · ${c.pages} хуудас · ${F_(c.fin).name}${c.paper==='flat'?' · Lay-flat':''}${c.gift?' · Бэлгийн хайрцаг':''}`;
+
+/* ---------- state ---------- */
+// carts saved by the earlier square-format version point at destinations that no longer exist
+let cart=load('ayanCart',[]).filter(c=>DMAP[c.dest]).map(c=>({...c,cov:c.cov||'design',size:S_(c.size).id}));
+const photos={}; let gridReg='mn', gridQ='';
+const saveCart=()=>{save('ayanCart',cart);$('#cartN').textContent=cart.reduce((a,c)=>a+c.qty,0)||''};
+
+/* ---------- auto layout ----------
+   Only the user's approved spreads: their five-step spec (1 big + 2 small, 4-photo collage,
+   1 full page, portrait + landscape, 3–5 photo creative) and the layouts in their sample book
+   (full-spread panorama, 1 big + 2 small top + 1 wide, 1 big + 3 stacked).
+   A cell is [page, x, y, w, h]: page 0/1 in page units (0..1), 's' spans the spread (x,w in 0..2). */
+const PA=.75; // page width / height (3:4 books)
+const LAYOUTS=(()=>{
+  const mx=.05,my=mx*PA,gx=.03,gy=gx*PA,iw=1-2*mx,ih=1-2*my,hw=(iw-gx)/2,h2=(ih-gy)/2,h3=(ih-2*gy)/3;
+  const F=p=>[p,mx,my,iw,ih], lh=iw*PA/1.5, t1=ih*.42, c1=ih*.6;
+  return[
+    {id:'pano',n:'Бүтэн дэлгэц',need:'L',cells:[['s',mx,my,2-2*mx,ih]]},
+    {id:'full',n:'1 бүтэн хуудас',cells:[F(0)]},
+    {id:'pl',n:'Босоо + хэвтээ',cells:[F(0),[1,mx,(1-lh)/2,iw,lh]]},
+    {id:'lp',n:'Хэвтээ + босоо',cells:[[0,mx,(1-lh)/2,iw,lh],F(1)]},
+    {id:'big2',n:'1 том + 2 жижиг',cells:[F(0),[1,mx,my,iw,h2],[1,mx,my+h2+gy,iw,h2]]},
+    // one wide strip across both pages over one photo per page
+    {id:'c3',n:'3 зурагтай creative',cells:[['s',mx,my,2-2*mx,c1],[0,mx,my+c1+gy,iw,ih-c1-gy],[1,mx,my+c1+gy,iw,ih-c1-gy]]},
+    {id:'collage',n:'4 зурагтай коллаж',cells:[[0,mx,my,iw,ih*.56],[0,mx,my+ih*.56+gy,iw,ih*.44-gy],[1,mx,my,iw,ih*.44-gy],[1,mx,my+ih*.44,iw,ih*.56]]},
+    {id:'big3',n:'1 том + 2 жижиг + 1 өргөн',cells:[F(0),[1,mx,my,hw,t1],[1,mx+hw+gx,my,hw,t1],[1,mx,my+t1+gy,iw,ih-t1-gy]]},
+    {id:'big3s',n:'1 том + 3 хэвтээ',cells:[F(0),[1,mx,my,iw,h3],[1,mx,my+h3+gy,iw,h3],[1,mx,my+2*(h3+gy),iw,h3]]},
+    {id:'c5',n:'5 зурагтай creative',cells:[F(0),[1,mx,my,hw,h2],[1,mx+hw+gx,my,hw,h2],[1,mx,my+h2+gy,hw,h2],[1,mx+hw+gx,my+h2+gy,hw,h2]]}
+  ];
+})();
+const LBY={};LAYOUTS.forEach(v=>(LBY[v.cells.length]=LBY[v.cells.length]||[]).push(v));
+const SPEC=['big2','collage','full','pl','c5']; // spreads 1–2 … 9–10 follow the user's order
+const MAXK=5;
+
+async function exifDate(file){
+  try{
+    if(!/jpe?g/i.test(file.type))return null;
+    const v=new DataView(await file.slice(0,262144).arrayBuffer());
+    if(v.getUint16(0)!==0xFFD8)return null;
+    let o=2;
+    while(o+4<v.byteLength){
+      const mk=v.getUint16(o),len=v.getUint16(o+2);
+      if(mk===0xFFE1&&v.getUint32(o+4)===0x45786966){
+        const t=o+10,le=v.getUint16(t)===0x4949,g16=p=>v.getUint16(p,le),g32=p=>v.getUint32(p,le);
+        const find=(ifd,tag)=>{const n=g16(ifd);for(let i=0;i<n;i++){const e=ifd+2+i*12;if(g16(e)===tag)return e}return-1};
+        let e=find(t+g32(t+4),0x8769);if(e<0)return null;
+        const ex=t+g32(e+8);e=find(ex,0x9003);if(e<0)e=find(ex,0x9004);if(e<0)return null;
+        const off=t+g32(e+8);let s='';for(let i=0;i<19;i++)s+=String.fromCharCode(v.getUint8(off+i));
+        const m=s.match(/(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})/);
+        return m?new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5],+m[6]).getTime():null;
+      }
+      if((mk&0xFF00)!==0xFF00)return null;
+      o+=2+len;
+    }
+  }catch(e){}
+  return null;
+}
+// Sharpness, colourfulness, exposure and a focal point, measured on a 160px copy.
+function analyse(ph,im){
+  try{
+    const s=Math.min(1,160/Math.max(im.naturalWidth,im.naturalHeight)),w=Math.max(8,Math.round(im.naturalWidth*s)),h=Math.max(8,Math.round(im.naturalHeight*s));
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    const x=cv.getContext('2d',{willReadFrequently:true});x.drawImage(im,0,0,w,h);
+    const d=x.getImageData(0,0,w,h).data,N=w*h,L=new Float32Array(N);
+    let sum=0,clip=0,rg=0,yb=0,rg2=0,yb2=0;
+    for(let i=0,j=0;i<d.length;i+=4,j++){const R=d[i],G=d[i+1],B=d[i+2],l=.299*R+.587*G+.114*B;L[j]=l;sum+=l;if(l<12||l>243)clip++;const a=R-G,b=.5*(R+G)-B;rg+=a;yb+=b;rg2+=a*a;yb2+=b*b}
+    const mean=sum/N,mr=rg/N,my=yb/N,sr=Math.sqrt(Math.max(0,rg2/N-mr*mr)),sy=Math.sqrt(Math.max(0,yb2/N-my*my));
+    let lap=0,lap2=0,cnt=0,gx=0,gy=0,gw=0;
+    for(let y=1;y<h-1;y++)for(let xx=1;xx<w-1;xx++){
+      const k=y*w+xx,v=4*L[k]-L[k-1]-L[k+1]-L[k-w]-L[k+w];lap+=v;lap2+=v*v;cnt++;
+      const g=Math.abs(L[k+1]-L[k-1])+Math.abs(L[k+w]-L[k-w]);gx+=xx*g;gy+=y*g;gw+=g}
+    const lm=lap/cnt;
+    ph.q={sharp:lap2/cnt-lm*lm,color:Math.sqrt(sr*sr+sy*sy)+.3*Math.sqrt(mr*mr+my*my),expo:1-Math.abs(mean-120)/120-clip/N*2};
+    const cl=v=>Math.round(Math.max(15,Math.min(85,50+(v-50)*.8)));
+    ph.fx=cl(gw?gx/gw/w*100:50);ph.fy=cl(gw?gy/gw/h*100:50);
+  }catch(e){ph.fx=ph.fy=50}
+}
+function scoreAll(list){
+  const n=list.length;if(!n)return;
+  ['sharp','color'].forEach(k=>[...list].sort((a,b)=>(a.q?a.q[k]:0)-(b.q?b.q[k]:0)).forEach((p,i)=>p['_'+k]=n>1?i/(n-1):.5));
+  list.forEach(p=>{const e=p.q?Math.max(0,Math.min(1,p.q.expo)):.5;p.score=.4*p._sharp+.25*p._color+.2*e+.15*Math.min(1,p.w*p.h/8e6)});
+}
+const PERMS={};
+function perms(n){if(PERMS[n])return PERMS[n];const out=[],a=[...Array(n).keys()];(function h(k){if(k===n){out.push(a.slice());return}for(let i=k;i<n;i++){[a[k],a[i]]=[a[i],a[k]];h(k+1);[a[k],a[i]]=[a[i],a[k]]}})(0);return PERMS[n]=out}
+// Photos per spread: the agreed 3-4-1-2-5 rhythm, then evened out so every photo is used.
+function planCounts(P,S){
+  const pat=[3,4,1,2,5],c=Array.from({length:S},(_,i)=>pat[i%5]);let sum=c.reduce((a,b)=>a+b,0),p=0;
+  const up=v=>v<MAXK,down=v=>v>1;
+  // the opening five spreads keep their counts while later spreads can absorb the difference
+  const pick=ok=>{for(const from of S>5?[5,0]:[0]){let bi=-1;for(let j=0;j<S;j++){const i=(p+j)%S;if(i<from)continue;if(ok(c[i])&&(bi<0||(ok===up?c[i]<c[bi]:c[i]>c[bi])))bi=i}if(bi>=0)return bi}return-1};
+  while(sum<P){const i=pick(up);if(i<0)break;c[i]++;sum++;p=i+1}
+  while(sum>P){const i=pick(down);if(i<0)break;c[i]--;sum--;p=i+1}
+  for(let i=S-1;i>=0&&sum>P;i--){sum-=c[i];c[i]=0}
+  return c;
+}
+// Least cropping, with the strongest photos in the biggest cells.
+function fitLayout(v,grp){
+  const cs=v.cells.map(([pg,x,y,w,h])=>({A:w*PA/h,ar:w*h}));let best=null;
+  for(const pm of perms(grp.length)){let cost=0;
+    for(let i=0;i<cs.length;i++){const p=grp[pm[i]],c=cs[i];cost+=c.ar*Math.abs(Math.log(p.w/p.h/c.A))*2-.35*(p.score||0)*c.ar}
+    if(!best||cost<best.cost)best={cost,perm:pm}}
+  return best;
+}
+function buildBook(c){
+  const ph=(photos[c.id]||[]).filter(p=>!p.bad&&p.w).sort((x,y)=>(x.t||0)-(y.t||0));
+  scoreAll(ph);
+  const cover=ph.length?(ph.find(p=>p.id===co.cover[c.id])||ph.reduce((m,p)=>p.score>m.score?p:m,ph[0])):null;
+  const rest=c.cov==='photo'&&ph.length>MINPH?ph.filter(p=>p!==cover):ph;
+  const S=c.pages/2,seed=co.seed[c.id]||0,r=rng(c.id+':'+seed);
+  let k0=0,prev='';
+  const spreads=planCounts(rest.length,S).map((k,si)=>{
+    if(!k)return{v:null,cells:[]};
+    const grp=rest.slice(k0,k0+k);k0+=k;let best=null;
+    for(const v of LBY[k]){
+      if(v.need&&!grp.some(p=>p.w/p.h>1.25))continue;
+      const f=fitLayout(v,grp);
+      const t=f.cost+(v.id===prev?.8:0)+r()*(seed?.9:.3)-(!seed&&si<5&&SPEC[si]===v.id?1.2:0);
+      if(!best||t<best.t)best={v,perm:f.perm,t}}
+    prev=best.v.id;
+    return{v:best.v,cells:best.v.cells.map((cl,i)=>({cl,ph:grp[best.perm[i]]}))};
+  });
+  return{cover,spreads,used:k0,total:rest.length,ph};
+}
+const bestOf=c=>(photos[c.id]||[]).length?buildBook(c).cover:null;
+const pct=v=>(v*100).toFixed(2)+'%';
+const cellPos=([pg,x,y,w,h])=>`left:${pct(pg==='s'?x/2:(pg+x)/2)};top:${pct(y)};width:${pct(w/2)};height:${pct(h)}`;
+function spHTML(sp){
+  if(!sp.v)return'<div class="sp"></div>';
+  return`<div class="sp">${sp.cells.map(({cl,ph})=>`<div class="cell" style="${cellPos(cl)}"><img src="${ph.url}" alt="" style="object-position:${ph.fx}% ${ph.fy}%"></div>`).join('')}</div>`;
+}
+const layoutDemo=v=>`<div class="demo" style="aspect-ratio:3/2">${v.cells.map(cl=>`<i style="${cellPos(cl)}"></i>`).join('')}</div>`;
+
+/* ---------- home ---------- */
+function renderHome(){
+  const fan=[['mn-arkhangai'],['w-paris'],['w-seoul']];
+  $('#heroFan').innerHTML=fan.map(([id])=>{const c=defCfg(id);return`<div class="b3d" data-sp="${id}">${book3d(c)}</div>`}).join('');
+  $$('#heroFan .b3d').forEach(el=>setSpine(el,defCfg(el.dataset.sp)));
+  const imgs=a=>a.map(d=>`<img src="${d.img}" alt="" loading="lazy" decoding="async">`).join('');
+  const half=Math.ceil(DEST.length/2),r1=DEST.slice(0,half),r2=DEST.slice(half);
+  $('#mq1').innerHTML=imgs(r1)+imgs(r1);$('#mq2').innerHTML=imgs(r2)+imgs(r2);
+  $('#bxMinis').innerHTML=['mn-umnugovi','w-tokyo','mn-khuvsgul'].map(id=>`<img src="${DMAP[id].img}" alt="">`).join('');
+  $('#layoutDemos').innerHTML=LAYOUTS.map(v=>`<figure>${layoutDemo(v)}<figcaption>${v.n}</figcaption></figure>`).join('');
+  renderTabs();renderGrid();
+  $('#priceCards').innerHTML=SIZES.map(s=>`<div class="pcard${s.pop?' pop':''} reveal">${s.pop?'<span class="pill">Түгээмэл</span>':''}<div class="sz"><i style="--s:${s.s}"></i></div><h3>${s.name}</h3><div class="muted" style="font-size:14px">${s.note}</div><div class="price">${fmt(s.base)}</div><div class="muted" style="font-size:13px">24 хуудас</div><ul><li>+12 хуудас тутамд ${fmt(s.per12)}</li><li>72 хүртэл хуудас</li><li>Хатуу хавтас</li></ul></div>`).join('');
+  $('#extras').innerHTML=`<div><b>Soft-touch хавтас</b>+${fmt(12000)} · хилэн мэдрэмжтэй</div><div><b>Lay-flat хуудас</b>+${fmt(30000)} · бүтэн дэлгэгдэнэ</div><div><b>Бэлгийн хайрцаг</b>+${fmt(GIFT)}</div><div><b>Хүргэлт</b>УБ ${fmt(6000)} · ${fmt(150000)}-өөс дээш үнэгүй</div>`;
+  $('#bandCovers').innerHTML=[['w-bali','-7deg','24px'],['mn-khuvsgul','2deg','-10px'],['w-new_york','8deg','30px']].map(([id,rot,y])=>`<img src="${DMAP[id].img}" alt="" style="--rot:${rot};--y:${y}">`).join('');
+}
+function renderTabs(){$('#regTabs').innerHTML=Object.entries(REG).map(([k,v])=>`<button class="${gridReg===k?'on':''}" data-reg="${k}">${v}<small>${DEST.filter(d=>d.reg===k).length}</small></button>`).join('')}
+function renderGrid(){
+  const q=gridQ.trim().toLowerCase();
+  // a search looks across both tabs
+  const list=DEST.filter(d=>q?(d.name+' '+d.sub+' '+d.tags).toLowerCase().includes(q):d.reg===gridReg);
+  $('#grid').innerHTML=list.length?list.map(d=>`<button class="dcard" data-dest="${d.id}"><div class="cover"><img src="${d.img}" alt="${esc(d.name)}" loading="lazy" decoding="async"><img class="bk" src="${d.back}" alt="" loading="lazy" decoding="async"></div><div><div class="meta"><h3>${d.name}</h3><span class="pr">${fmt(SIZES[0].base)}-с</span></div><span>${d.sub}</span></div></button>`).join(''):`<div class="empty-msg">«${esc(gridQ)}» олдсонгүй. Хүссэн газраа бидэнд хэлээрэй.</div>`;
+}
+$('#regTabs').addEventListener('click',e=>{const b=e.target.closest('[data-reg]');if(!b)return;gridReg=b.dataset.reg;gridQ='';$('#q').value='';renderTabs();renderGrid()});
+$('#q').addEventListener('input',e=>{gridQ=e.target.value;renderGrid()});
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('[data-dest]');if(b)openDesigner(b.dataset.dest)});
+$('#heroFan').addEventListener('click',e=>{const b=e.target.closest('[data-sp]');if(b)openDesigner(b.dataset.sp)});
+$$('[data-go="top"]').forEach(b=>b.onclick=()=>scrollTo({top:0,behavior:'smooth'}));
+
+/* ---------- designer ---------- */
+let dz=null,dzEdit=null;
+function openOv(id){$('#'+id).classList.add('on');document.body.classList.add('lock')}
+function closeOv(id){$('#'+id).classList.remove('on');if(!$$('.ov.on,.modal.on').length&&!$('#drawer').classList.contains('on'))document.body.classList.remove('lock')}
+$$('[data-close]').forEach(b=>b.onclick=()=>closeOv(b.dataset.close));
+function openDesigner(id,edit){
+  dzEdit=edit==null?null:edit;dz=edit==null?defCfg(id):{...cart[edit]};
+  const d=DMAP[dz.dest];
+  $('#dzBody').innerHTML=`
+  <div class="dz-prev"><div class="flip" id="dzFlip"><button class="on" data-ry="-24">Нүүр</button><button data-ry="-156">Ар хуудас</button></div><div class="b3d" id="dzBook"></div>
+    <div class="rot"><span>Эргүүлэх</span><input type="range" id="dzRot" min="-200" max="25" value="-24" aria-label="Номыг эргүүлэх"></div>
+    <p class="dz-note">Хэвлэхээс өмнө бүх хуудсыг PDF-ээр илгээж баталгаажуулна.</p></div>
+  <div class="dz-opt">
+    <span class="chip-label"><i></i>${REG[d.reg]} · ${esc(d.sub)}</span><h2>${d.name}</h2>
+    <div class="opt"><span class="lbl">Нүүр</span><div class="seg" data-k="cov"><button data-v="design"><b>Загварын нүүр</b><small>${d.name}-ийн зурагтай</small></button><button data-v="photo"><b>Миний хамгийн гоё зураг</b><small>Зургаа оруулахад автоматаар сонгоно</small></button></div></div>
+    <div class="opt two"><div class="field"><label for="dzT">Гарчиг</label><input class="inp" id="dzT" maxlength="26" value="${esc(dz.title)}"><small id="dzTHint"></small></div><div class="field"><label for="dzS">Дэд бичиг</label><input class="inp" id="dzS" maxlength="36" value="${esc(dz.sub)}"><small>Он, хамт явсан хүмүүс…</small></div></div>
+    <div class="opt"><span class="lbl">Хэмжээ</span><div class="seg" data-k="size">${SIZES.map(s=>`<button data-v="${s.id}"><b>${s.name}</b><small>${fmt(s.base)}-с</small></button>`).join('')}</div></div>
+    <div class="opt"><span class="lbl">Хуудасны тоо <small id="phHint"></small></span><div class="seg pgn" data-k="pages">${PAGES.map(n=>`<button data-v="${n}"><b>${n}</b><small data-padd="${n}"></small></button>`).join('')}</div></div>
+    <div class="opt"><span class="lbl">Хавтасны өнгөлгөө</span><div class="seg" data-k="fin">${FIN.map(f=>`<button data-v="${f.id}"><b>${f.name}</b><small>${f.add?'+'+fmt(f.add):f.d}</small></button>`).join('')}</div></div>
+    <div class="opt"><span class="lbl">Цаас</span><div class="seg" data-k="paper">${PAPER.map(f=>`<button data-v="${f.id}"><b>${f.name}</b><small>${f.d}${f.add?' · +'+fmt(f.add):''}</small></button>`).join('')}</div></div>
+    <div class="opt two"><div><span class="lbl">Бэлгийн хайрцаг</span><div class="seg" data-k="gift"><button data-v="0"><b>Үгүй</b></button><button data-v="1"><b>Тийм</b><small>+${fmt(GIFT)}</small></button></div></div>
+      <div><span class="lbl">Тоо ширхэг</span><div class="qty"><button data-q="-1" aria-label="Хасах">−</button><span id="dzQ"></span><button data-q="1" aria-label="Нэмэх">+</button></div></div></div>
+  </div>`;
+  $('#dzAdd').textContent=dzEdit==null?'Сагсанд нэмэх':'Өөрчлөлт хадгалах';
+  $('#dzBook').innerHTML=book3d(dz);
+  $('#dzT').oninput=e=>{dz.title=e.target.value;updDz(true)};
+  $('#dzS').oninput=e=>{dz.sub=e.target.value;updDz(true)};
+  const setRy=v=>{$('#dzBook').style.setProperty('--ry',v+'deg');$('#dzRot').value=v;$$('#dzFlip button').forEach(b=>b.classList.toggle('on',(+b.dataset.ry<-90)===(v<-90)))};
+  $('#dzRot').oninput=e=>setRy(+e.target.value);
+  $('#dzFlip').onclick=e=>{const b=e.target.closest('[data-ry]');if(b)setRy(+b.dataset.ry)};
+  openOv('dz');$('#dz').scrollTop=0;updDz(true);
+}
+function updDz(art){
+  const bk=$('#dzBook');
+  if(art){bk.querySelector('.b3d-f').innerHTML=coverArt(dz,null);bk.querySelector('.b3d-s span').textContent=dz.title;setSpine(bk,dz)}
+  bk.querySelector('.b3d-in').style.setProperty('--t',Math.round(9+dz.pages/6)+'px');
+  $$('#dzBody [data-k]').forEach(g=>{const k=g.dataset.k,v=k==='gift'?String(+dz.gift):String(dz[k]);g.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v))});
+  const s=S_(dz.size);$$('[data-padd]').forEach(x=>{const n=+x.dataset.padd;x.textContent=n===24?'суурь':'+'+fmt((n-24)/12*s.per12)});
+  $('#dzTHint').textContent=dz.cov==='photo'?'Нүүр болон нуруунд бичигдэнэ':'Номын нуруунд бичигдэнэ';
+  $('#phHint').textContent=`· ${dz.pages}–${dz.pages*3} зураг санал болгоно`;
+  $('#dzQ').textContent=dz.qty;
+  $('#dzTot').textContent=fmt(lineTot(dz));
+  $('#dzBrk').textContent=`${dz.qty>1?dz.qty+' × '+fmt(unit(dz))+' · ':''}${optLine(dz)}`;
+}
+$('#dzBody').addEventListener('click',e=>{
+  const q=e.target.closest('[data-q]');if(q){dz.qty=Math.max(1,Math.min(20,dz.qty+ +q.dataset.q));updDz();return}
+  const b=e.target.closest('[data-v]');if(!b)return;const k=b.parentElement.dataset.k;if(!k)return;
+  let v=b.dataset.v;if(k==='pages')v=+v;if(k==='gift')v=v==='1';
+  dz[k]=v;updDz(k==='cov');
+});
+$('#dzAdd').onclick=()=>{
+  if(!dz.title.trim()){$('#dzT').classList.add('err');$('#dzT').focus();toast('Гарчиг бичнэ үү');return}
+  $('#dzT').classList.remove('err');
+  if(dzEdit==null){cart.push({...dz,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6)});toast('Сагсанд нэмлээ')}
+  else{cart[dzEdit]={...cart[dzEdit],...dz};toast('Хадгаллаа')}
+  saveCart();closeOv('dz');openDrawer();
+};
+
+/* ---------- cart drawer ---------- */
+function openDrawer(){renderDrawer();$('#drawer').classList.add('on');$('#bd').classList.add('on');document.body.classList.add('lock')}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#bd').classList.remove('on');if(!$$('.ov.on,.modal.on').length)document.body.classList.remove('lock')}
+$('#cartBtn').onclick=openDrawer;$('#drawerX').onclick=closeDrawer;$('#bd').onclick=closeDrawer;
+const subTot=()=>cart.reduce((a,c)=>a+lineTot(c),0);
+function renderDrawer(){
+  if(!cart.length){$('#drawerB').innerHTML=`<div style="text-align:center;padding:70px 10px" class="muted"><div style="width:64px;height:64px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1.2 11H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div><p style="font-weight:800;color:var(--ink);font-size:18px">Сагс хоосон байна</p><p style="font-size:14px;margin:6px 0 22px">Аялсан газрынхаа нүүрийг сонгоод номоо тохируулаарай.</p><button class="btn" id="dGo">Загварууд үзэх</button></div>`;$('#drawerF').innerHTML='';$('#dGo').onclick=()=>{closeDrawer();$('#catalog').scrollIntoView({behavior:'smooth'})};return}
+  $('#drawerB').innerHTML=cart.map((c,i)=>`<div class="ci">${coverBox(c,bestOf(c))}<div><h4>${esc(c.title)}</h4><div class="o">${DMAP[c.dest].name} · ${optLine(c)}</div><div class="row"><span class="qty" style="transform:scale(.82);transform-origin:left"><button data-cq="${i}" data-d="-1">−</button><span>${c.qty}</span><button data-cq="${i}" data-d="1">+</button></span><b>${fmt(lineTot(c))}</b></div><div class="row" style="margin-top:6px"><button class="link" data-ed="${i}">Засах</button><button class="link" style="color:var(--bad)" data-rm="${i}">Устгах</button></div></div></div>`).join('');
+  $('#drawerF').innerHTML=`<div class="sumrow big"><span>Нийт</span><span>${fmt(subTot())}</span></div><div class="muted" style="font-size:12.5px">Хүргэлтийн төлбөрийг дараагийн алхамд тооцно.</div><button class="btn acc" id="toCo">Захиалах <span class="ar">→</span></button>`;
+  $('#toCo').onclick=()=>{closeDrawer();openCheckout()};
+}
+$('#drawerB').addEventListener('click',e=>{
+  const q=e.target.closest('[data-cq]');if(q){const c=cart[+q.dataset.cq];c.qty=Math.max(1,Math.min(20,c.qty+ +q.dataset.d));saveCart();renderDrawer();return}
+  const ed=e.target.closest('[data-ed]');if(ed){const i=+ed.dataset.ed;closeDrawer();openDesigner(cart[i].dest,i);return}
+  const rm=e.target.closest('[data-rm]');if(rm){const c=cart.splice(+rm.dataset.rm,1)[0];(photos[c.id]||[]).forEach(p=>URL.revokeObjectURL(p.url));delete photos[c.id];saveCart();renderDrawer();toast('Устгалаа')}
+});
+
+/* ---------- checkout ---------- */
+let co={step:0,later:{},view:{},cover:{},seed:{},all:{},f:{name:'',phone:'',email:'',method:'ub',dist:'',khoroo:'',addr:'',aimag:'',note:'',pay:'qpay',agree:false},err:''};
+const STEPS=['Зураг','Хүргэлт','Төлбөр'];
+function openCheckout(){if(!cart.length){openDrawer();return}co.step=0;co.err='';co.done=null;openOv('co');renderCO()}
+let coRaf=0;const coLater=()=>{if(coRaf)return;coRaf=requestAnimationFrame(()=>{coRaf=0;if($('#co').classList.contains('on')&&co.step===0&&!co.done)renderCO()})};
+function addPhotos(itemId,files){
+  const arr=photos[itemId]||(photos[itemId]=[]);let n=0;
+  [...files].forEach(f=>{if(!/^image\//.test(f.type)&&!/\.(heic|heif)$/i.test(f.name))return;n++;
+    const ph={id:uid(),url:URL.createObjectURL(f),name:f.name,w:0,h:0,t:f.lastModified||0,fx:50,fy:50};arr.push(ph);
+    exifDate(f).then(t=>{if(t){ph.t=t;coLater()}});
+    const im=new Image();im.onload=()=>{ph.w=im.naturalWidth;ph.h=im.naturalHeight;analyse(ph,im);coLater()};im.onerror=()=>{ph.bad=1;coLater()};im.src=ph.url});
+  if(n)toast(n+' зураг нэмлээ');renderCO();
+}
+function bookView(c,B){
+  // views: 0 = front cover, 1..S = spreads, S+1 = back cover
+  const total=B.spreads.length+2,i=Math.min(co.view[c.id]||0,total-1),pg=k=>`${2*k+1}–${2*k+2}`,empty=B.spreads.filter(s=>!s.v).length,isBack=i===total-1;
+  const cov=`<div class="spv-cv">${coverBox(c,B.cover)}</div>`;
+  const info=`<div class="spv-info"><span class="muted"><b>${B.used}</b> зургаар <b>${c.pages}</b> хуудсыг автоматаар зохиолоо${empty?` · ${empty*2} хуудас хоосон`:''}</span>
+    <span style="display:flex;gap:16px"><button class="link" data-rs="${c.id}">↻ Дахин зохиох</button><button class="link" data-all="${c.id}">${co.all[c.id]?'Нэг нэгээр харах':'Бүх хуудсыг харах'}</button></span></div>`;
+  const warn=(B.total>B.used?`<div class="warn" style="margin:0 0 14px">${B.total-B.used} зураг багтсангүй. Хуудасны тоогоо нэмбэл бүгд орно.</div>`:'')+(empty?`<div class="warn" style="margin:0 0 14px">${empty*2} хуудас хоосон үлдлээ. Зураг нэмэх эсвэл хуудасны тоогоо багасгаарай.</div>`:'');
+  if(co.all[c.id])return`<div class="spv">${info}${warn}<div class="spv-all"><figure>${coverBox(c,B.cover)}<figcaption>Нүүр</figcaption></figure>${B.spreads.map((s,k)=>`<figure>${spHTML(s)}<figcaption>${pg(k)} · ${s.v?s.v.n:'Хоосон'}</figcaption></figure>`).join('')}<figure>${backBox(c)}<figcaption>Ар хуудас</figcaption></figure></div></div>`;
+  const body=i===0?cov:isBack?`<div class="spv-cv">${backBox(c)}</div>`:spHTML(B.spreads[i-1]),sp=B.spreads[i-1];
+  const lbl=i===0?'Нүүр':isBack?'Ар хуудас':`${pg(i-1)}-р хуудас · <span class="muted">${sp.v?sp.v.n:'Хоосон'}</span>`;
+  return`<div class="spv">${info}${warn}${body}<div class="spv-nav"><button data-sv="${c.id}" data-d="-1" ${i===0?'disabled':''} aria-label="Өмнөх">‹</button><span>${lbl} <span class="muted">· ${i+1}/${total}</span></span><button data-sv="${c.id}" data-d="1" ${i>=total-1?'disabled':''} aria-label="Дараах">›</button></div></div>`;
+}
+function stepPhotos(){
+  return`<h2>Зургаа оруулна уу</h2><p class="muted">Ном бүрт дор хаяж ${MINPH} зураг. Зургийг тань автоматаар хуудсанд байрлуулна.</p>`+cart.map(c=>{
+    const list=photos[c.id]||[],B=buildBook(c),ok=B.ph,lo=ok.filter(p=>p.w*p.h<1.2e6).length,bad=list.filter(p=>p.bad).length,later=!!co.later[c.id],enough=ok.length>=MINPH;
+    const shown=[...ok,...list.filter(p=>p.bad||!p.w)],isCov=p=>c.cov==='photo'&&B.cover===p;
+    return`<div class="pcard2"><div class="pc-top">${coverBox(c,B.cover)}<div><h3>${esc(c.title)}</h3><div class="muted" style="font-size:13.5px">${DMAP[c.dest].name} · ${optLine(c)}${c.qty>1?' · '+c.qty+' ширхэг':''}</div></div>
+      <div class="cnt${enough?' ok':''}">${ok.length} зураг<small>санал болгох ${c.pages}–${c.pages*3}</small></div></div>
+      ${later?`<div class="warn info">Захиалга баталгаажсаны дараа зураг илгээх холбоосыг утас, и-мэйлээр тань явуулна.</div>`:`
+      <label class="drop" data-drop="${c.id}"><input type="file" accept="image/*,.heic,.heif" multiple data-file="${c.id}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></span><b>Зургаа энд чирж оруулах эсвэл дарж сонгох</b><small>Олон зургийг нэг дор сонгож болно · JPG, PNG</small></label>
+      ${list.length?`<div class="pc-acts" style="justify-content:space-between"><div class="pc-cov">Нүүр<div class="seg-mini"><button class="${c.cov!=='photo'?'on':''}" data-cv="${c.id}|design">Загварын нүүр</button><button class="${c.cov==='photo'?'on':''}" data-cv="${c.id}|photo">Миний хамгийн гоё зураг</button></div></div><span class="muted" style="font-size:13px">★ дарж нүүрний зургаа өөрөө сонгоно</span></div>
+      <div class="thumbs">${shown.map(p=>p.bad?`<div class="th bad">${esc(p.name.slice(0,18))}<br>харагдахгүй<button data-rp="${c.id}|${p.id}" aria-label="Устгах">×</button></div>`:`<div class="th${isCov(p)?' cv':''}"><img src="${p.url}" alt="" loading="lazy"><button class="st" data-star="${c.id}|${p.id}" aria-label="Нүүр болгох" title="Нүүр болгох">★</button><button data-rp="${c.id}|${p.id}" aria-label="Устгах">×</button>${p.w&&p.w*p.h<1.2e6?'<i>Чанар бага</i>':''}</div>`).join('')}</div>`:''}
+      ${lo?`<div class="warn">${lo} зураг бага нягтаршилтай тул бүдэг хэвлэгдэж магадгүй. Боломжтой бол анхны файлыг оруулаарай.</div>`:''}
+      ${bad?`<div class="warn">${bad} файл хөтөч дээр харагдахгүй байна (HEIC байж магадгүй). Хэвлэхэд асуудалгүй ч урьдчилсан харагдацад орохгүй.</div>`:''}
+      ${ok.length?bookView(c,B):''}`}
+      <div class="pc-acts"><label class="chk"><input type="checkbox" data-later="${c.id}" ${later?'checked':''}>Зургаа дараа илгээнэ</label>${list.length&&!later?`<button class="link" data-clr="${c.id}">Бүгдийг арилгах</button>`:''}</div></div>`}).join('');
+}
+const fld=(k,lbl,attrs='',full)=>`<div class="field${full?' full':''}"><label for="f_${k}">${lbl}</label><input class="inp" id="f_${k}" data-f="${k}" value="${esc(co.f[k])}" ${attrs}></div>`;
+const sel=(k,lbl,opts)=>`<div class="field"><label for="f_${k}">${lbl}</label><select class="inp" id="f_${k}" data-f="${k}"><option value="">Сонгох…</option>${opts.map(o=>`<option${co.f[k]===o?' selected':''}>${o}</option>`).join('')}</select></div>`;
+function stepDeliv(){const m=co.f.method;
+  return`<h2>Хүргэлт</h2><p class="muted">Захиалгын явцыг энэ утсаар мэдэгдэнэ.</p>
+  <div class="form">${fld('name','Нэр','autocomplete="name" placeholder="Таны нэр"')}${fld('phone','Утас','inputmode="numeric" maxlength="8" autocomplete="tel" placeholder="99112233"')}${fld('email','И-мэйл (заавал биш)','type="email" autocomplete="email" placeholder="name@mail.com"',1)}</div>
+  <div class="opt"><span class="lbl">Хүргэлтийн хэлбэр</span><div class="radios">${Object.entries(DELIV).map(([k,v])=>`<button class="radio${m===k?' on':''}" data-m="${k}"><b>${v.name}</b><small>${v.d}</small></button>`).join('')}</div></div>
+  <div class="form">${m==='ub'?sel('dist','Дүүрэг',DIST)+fld('khoroo','Хороо','inputmode="numeric" placeholder="1"')+fld('addr','Дэлгэрэнгүй хаяг','placeholder="Байр, орц, давхар, тоот"',1):m==='aimag'?sel('aimag','Аймаг',AIMAG)+fld('addr','Сум, дэлгэрэнгүй хаяг','placeholder="Сум, баг, гудамж"'):''}
+  <div class="field full"><label for="f_note">Нэмэлт тэмдэглэл</label><textarea class="inp" id="f_note" data-f="note" rows="3" placeholder="Жишээ нь: бэлэг тул үнийн хуудас хийхгүй байх">${esc(co.f.note)}</textarea></div></div>`}
+function totals(){const s=subTot(),fee=DELIV[co.f.method].fee(s);return{s,fee,t:s+fee}}
+function summary(){const T=totals();return`<div class="summary"><h3>Захиалгын дүн</h3>${cart.map(c=>`<div class="sline">${coverBox(c,bestOf(c))}<span>${esc(c.title)}<br><span class="muted" style="font-size:12.5px">${S_(c.size).name} · ${c.pages} х.${c.qty>1?' · ×'+c.qty:''}</span></span><b>${fmt(lineTot(c))}</b></div>`).join('')}<div class="hr"></div><div class="sumrow"><span>Номнууд</span><span>${fmt(T.s)}</span></div><div class="sumrow"><span>Хүргэлт</span><span>${T.fee?fmt(T.fee):'Үнэгүй'}</span></div><div class="hr"></div><div class="sumrow big"><span>Нийт</span><span>${fmt(T.t)}</span></div></div>`}
+function stepPay(){const f=co.f,p=f.pay,D=DELIV[f.method];
+  const where=f.method==='ub'?`${f.dist} дүүрэг, ${f.khoroo}-р хороо, ${f.addr}`:f.method==='aimag'?`${f.aimag} аймаг, ${f.addr}`:'Очиж авна';
+  return`<h2>Төлбөр</h2><p class="muted">Мэдээллээ шалгаад төлбөрийн хэлбэрээ сонгоно уу.</p>
+  <div class="co-grid" style="margin-top:22px"><div>
+    <div class="pcard2" style="margin-top:0"><div class="sumrow"><b>${esc(f.name)} · ${esc(f.phone)}</b><button class="link" data-goto="1">Засах</button></div><div class="muted" style="font-size:14px;margin-top:4px">${D.name} — ${esc(where)}</div>${f.email?`<div class="muted" style="font-size:14px">${esc(f.email)}</div>`:''}</div>
+    <div class="opt"><span class="lbl">Төлбөрийн хэлбэр</span><div class="radios" style="grid-template-columns:1fr 1fr"><button class="radio${p==='qpay'?' on':''}" data-pay="qpay"><b>QPay</b><small>Банкны аппаар QR уншуулна</small></button><button class="radio${p==='bank'?' on':''}" data-pay="bank"><b>Дансаар шилжүүлэх</b><small>Гүйлгээний утгад захиалгын дугаар</small></button></div></div>
+    <label class="chk" style="margin-top:24px"><input type="checkbox" id="agree" ${f.agree?'checked':''}>Хуудсыг PDF-ээр баталгаажуулсны дараа хэвлэх, захиалгын нөхцөлийг зөвшөөрч байна</label>
+  </div>${summary()}</div>`}
+function renderCO(){
+  $('#coSteps').innerHTML=co.done?'':STEPS.map((s,i)=>`${i?'<em></em>':''}<span class="${i===co.step?'on':i<co.step?'done':''}"><i>${i<co.step?'✓':i+1}</i><b>${s}</b></span>`).join('');
+  if(co.done){$('#coBody').innerHTML=doneView(co.done);return}
+  const body=[stepPhotos,stepDeliv,stepPay][co.step]();
+  const next=co.step===2?`Захиалга баталгаажуулах · ${fmt(totals().t)}`:'Үргэлжлүүлэх →';
+  $('#coBody').innerHTML=`<div class="co">${co.step===1?`<div class="co-grid"><div>${body}</div>${summary()}</div>`:body}
+    <div class="co-nav"><button class="btn ghost" id="coBack">${co.step?'← Буцах':'← Сагс руу'}</button><span class="err-msg">${co.err}</span><button class="btn acc" id="coNext">${next}</button></div></div>`;
+  $('#coBack').onclick=()=>{co.err='';if(co.step){co.step--;renderCO();$('#co').scrollTop=0}else{closeOv('co');openDrawer()}};
+  $('#coNext').onclick=coNext;
+}
+function coNext(){
+  co.err='';
+  if(co.step===0){const miss=cart.filter(c=>!co.later[c.id]&&(photos[c.id]||[]).filter(p=>!p.bad).length<MINPH);
+    if(miss.length){co.err=`«${miss[0].title}» номд дор хаяж ${MINPH} зураг оруулна уу, эсвэл «Зургаа дараа илгээнэ»-г сонгоно уу.`;renderCO();return}}
+  if(co.step===1){const f=co.f,bad=[];
+    if(f.name.trim().length<2)bad.push('name');if(!/^[6-9]\d{7}$/.test(f.phone))bad.push('phone');
+    if(f.email&&!/^\S+@\S+\.\S+$/.test(f.email))bad.push('email');
+    if(f.method==='ub'){if(!f.dist)bad.push('dist');if(!f.khoroo.trim())bad.push('khoroo');if(f.addr.trim().length<4)bad.push('addr')}
+    if(f.method==='aimag'){if(!f.aimag)bad.push('aimag');if(f.addr.trim().length<3)bad.push('addr')}
+    if(bad.length){co.err=bad.includes('phone')?'Утасны дугаар 8 оронтой байх ёстой.':'Улаанаар тэмдэглэсэн талбарыг бөглөнө үү.';renderCO();bad.forEach(k=>{const el=$('#f_'+k);el&&el.classList.add('err')});return}}
+  if(co.step===2){if(!co.f.agree){co.err='Нөхцөлийг зөвшөөрнө үү.';renderCO();return}placeOrder();return}
+  co.step++;renderCO();$('#co').scrollTop=0;
+}
+function placeOrder(){
+  const dt=new Date(),ymd=String(dt.getFullYear()).slice(2)+String(dt.getMonth()+1).padStart(2,'0')+String(dt.getDate()).padStart(2,'0');
+  const T=totals(),no=`AY${ymd}-${String(Math.floor(1000+Math.random()*9000))}`;
+  const order={no,date:dt.toISOString(),status:0,customer:{name:co.f.name.trim(),phone:co.f.phone,email:co.f.email.trim()},
+    delivery:{method:co.f.method,dist:co.f.dist,khoroo:co.f.khoroo,aimag:co.f.aimag,addr:co.f.addr,note:co.f.note},pay:co.f.pay,
+    items:cart.map(c=>{const B=buildBook(c);return{...c,photos:B.ph.length,later:!!co.later[c.id],coverImg:c.cov==='photo'?null:DMAP[c.dest].file,backImg:DMAP[c.dest].backFile,
+      coverPhoto:c.cov==='photo'&&B.cover?B.cover.name:null,layout:B.spreads.map(s=>s.v?{t:s.v.id,ph:s.cells.map(x=>x.ph.name)}:{t:'empty'})}}),
+    sub:T.s,fee:T.fee,total:T.t};
+  const all=load('ayanOrders',[]);all.unshift(order);save('ayanOrders',all);
+  cart=[];saveCart();co.done=order;co.later={};co.view={};co.f.agree=false;renderCO();$('#co').scrollTop=0;
+}
+function fakeQR(seed){const r=rng(seed),n=25,c=6;let s='';for(let y=0;y<n;y++)for(let x=0;x<n;x++){const f=(x<7&&y<7)||(x>=n-7&&y<7)||(x<7&&y>=n-7);if(f)continue;if(r()<.48)s+=`<rect x="${x*c}" y="${y*c}" width="${c}" height="${c}"/>`}
+  const fp=(x,y)=>`<rect x="${x}" y="${y}" width="42" height="42" fill="none" stroke="#0f1113" stroke-width="6" transform="translate(3,3)"/><rect x="${x+12}" y="${y+12}" width="18" height="18"/>`;
+  return`<svg viewBox="-6 -6 162 162" fill="#0f1113"><rect x="-6" y="-6" width="162" height="162" fill="#fff"/>${s}${fp(0,0)}${fp(108,0)}${fp(0,108)}</svg>`}
+function doneView(o){const later=o.items.some(i=>i.later);
+  return`<div class="done"><div class="ok-ic"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5 9-10"/></svg></div>
+  <h2>Захиалга хүлээн авлаа</h2><p class="muted" style="margin-top:10px">Баярлалаа, ${esc(o.customer.name)}! Захиалгын дугаараа хадгалаарай.</p><div class="ono">${o.no}</div>
+  <div class="paybox">${o.pay==='qpay'?fakeQR(o.no):''}<div>${o.pay==='qpay'?`<b style="font-size:18px">QPay-ээр төлөх</b><p class="muted" style="font-size:13.5px;margin:6px 0 12px">Банкны аппаараа QR кодыг уншуулна уу. <i>(Жишээ QR, QPay холболт хийгдээгүй)</i></p>`:`<b style="font-size:18px">Дансаар шилжүүлэх</b><p class="muted" style="font-size:13.5px;margin:6px 0 12px">Доорх данс руу шилжүүлнэ үү.</p>`}
+  <dl><dt>Дүн</dt><dd>${fmt(o.total)}</dd>${o.pay==='bank'?'<dt>Банк</dt><dd>[банкны нэр]</dd><dt>Данс</dt><dd>[дансны дугаар]</dd><dt>Хүлээн авагч</dt><dd>[байгууллагын нэр]</dd>':''}<dt>Гүйлгээний утга</dt><dd>${o.no}</dd></dl></div></div>
+  <ul class="tl" style="text-align:left;max-width:420px;margin:0 auto"><li class="on"><i>1</i><div><b>Төлбөрөө төлнө</b><small>Төлбөр орсны дараа SMS ирнэ.</small></div></li><li><i>2</i><div><b>${later?'Зургаа илгээнэ':'Хуудсыг шалгана'}</b><small>${later?'Зураг илгээх холбоосыг '+esc(o.customer.phone)+' дугаарт явуулна.':'Автоматаар зохиосон хуудсыг манай ажилтан шалгана.'}</small></div></li><li><i>3</i><div><b>PDF баталгаажуулна</b><small>Бүх хуудсыг харж, зөвшөөрнө.</small></div></li><li><i>4</i><div><b>Хэвлэж, хүргэнэ</b><small>5–7 ажлын өдөрт хэвлэнэ.</small></div></li></ul>
+  <div style="margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn" data-close-co>Нүүр хуудас руу</button><button class="btn ghost" data-trk="${o.no}|${o.customer.phone}">Захиалга шалгах</button></div></div>`}
+$('#coBody').addEventListener('click',e=>{
+  const t=e.target,itm=id=>cart.find(c=>c.id===id);
+  const sv=t.closest('[data-sv]');if(sv){const id=sv.dataset.sv;co.view[id]=Math.max(0,(co.view[id]||0)+ +sv.dataset.d);renderCO();return}
+  const rs=t.closest('[data-rs]');if(rs){co.seed[rs.dataset.rs]=(co.seed[rs.dataset.rs]||0)+1;renderCO();toast('Шинэ байрлалаар зохиолоо');return}
+  const al=t.closest('[data-all]');if(al){co.all[al.dataset.all]=!co.all[al.dataset.all];renderCO();return}
+  const st=t.closest('[data-star]');if(st){e.preventDefault();const[it,pid]=st.dataset.star.split('|');co.cover[it]=pid;itm(it).cov='photo';saveCart();renderCO();toast('Нүүрний зургийг солилоо');return}
+  const cv=t.closest('[data-cv]');if(cv){const[it,m]=cv.dataset.cv.split('|');itm(it).cov=m;saveCart();renderCO();return}
+  const rp=t.closest('[data-rp]');if(rp){e.preventDefault();const[it,pid]=rp.dataset.rp.split('|'),arr=photos[it],i=arr.findIndex(p=>p.id===pid);if(i>-1){URL.revokeObjectURL(arr[i].url);arr.splice(i,1)}renderCO();return}
+  const clr=t.closest('[data-clr]');if(clr){(photos[clr.dataset.clr]||[]).forEach(p=>URL.revokeObjectURL(p.url));photos[clr.dataset.clr]=[];co.view[clr.dataset.clr]=0;renderCO();return}
+  const m=t.closest('[data-m]');if(m){co.f.method=m.dataset.m;renderCO();return}
+  const p=t.closest('[data-pay]');if(p){co.f.pay=p.dataset.pay;renderCO();return}
+  const g=t.closest('[data-goto]');if(g){co.step=+g.dataset.goto;renderCO();return}
+  if(t.closest('[data-close-co]')){closeOv('co');scrollTo({top:0});return}
+  const tr=t.closest('[data-trk]');if(tr){const[n,ph]=tr.dataset.trk.split('|');closeOv('co');openTrack(n,ph)}
+});
+$('#coBody').addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset.file){addPhotos(t.dataset.file,t.files);return}
+  if(t.dataset.later){co.later[t.dataset.later]=t.checked;renderCO();return}
+  if(t.id==='agree'){co.f.agree=t.checked;return}
+  if(t.dataset.f&&t.tagName==='SELECT'){co.f[t.dataset.f]=t.value;t.classList.remove('err')}
+});
+$('#coBody').addEventListener('input',e=>{const t=e.target;if(!t.dataset.f)return;let v=t.value;if(t.dataset.f==='phone'){v=v.replace(/\D/g,'').slice(0,8);t.value=v}co.f[t.dataset.f]=v;t.classList.remove('err')});
+['dragenter','dragover'].forEach(ev=>$('#coBody').addEventListener(ev,e=>{const d=e.target.closest('[data-drop]');if(d){e.preventDefault();d.classList.add('over')}}));
+$('#coBody').addEventListener('dragleave',e=>{const d=e.target.closest('[data-drop]');if(d&&!d.contains(e.relatedTarget))d.classList.remove('over')});
+$('#coBody').addEventListener('drop',e=>{const d=e.target.closest('[data-drop]');if(!d)return;e.preventDefault();addPhotos(d.dataset.drop,e.dataTransfer.files)});
+
+/* ---------- tracking ---------- */
+function openTrack(no,ph){$('#trk').classList.add('on');document.body.classList.add('lock');if(no){$('#tNo').value=no;$('#tPh').value=ph||'';doTrack()}else{$('#tRes').innerHTML='';$('#tErr').textContent=''}}
+$('#trackBtn').onclick=()=>openTrack();
+$('#trk').addEventListener('click',e=>{if(e.target.id==='trk')closeOv('trk')});
+$('#tPh').oninput=e=>e.target.value=e.target.value.replace(/\D/g,'').slice(0,8);
+function doTrack(){
+  const no=$('#tNo').value.trim().toUpperCase(),ph=$('#tPh').value.trim(),o=load('ayanOrders',[]).find(x=>x.no===no&&x.customer.phone===ph);
+  $('#tErr').textContent='';$('#tRes').innerHTML='';
+  if(!no||!ph){$('#tErr').textContent='Хоёр талбарыг бөглөнө үү';return}
+  if(!o){$('#tErr').textContent='Ийм захиалга олдсонгүй';return}
+  const d=new Date(o.date);
+  $('#tRes').innerHTML=`<div class="pcard2"><div class="sumrow"><b>${o.no}</b><span class="muted">${d.toLocaleDateString('mn-MN')}</span></div><div class="muted" style="font-size:13.5px;margin-top:4px">${o.items.map(i=>esc(i.title)+(i.qty>1?' ×'+i.qty:'')).join(', ')} · ${fmt(o.total)}</div>
+  <ul class="tl">${STATUS.map((s,i)=>`<li class="${i<o.status?'dn':i===o.status?'on':''}"><i>${i<o.status?'✓':i+1}</i><div><b>${s}</b>${i===o.status?`<small>${i===0?'Төлбөр хүлээгдэж байна':'Одоогийн шат'}</small>`:''}</div></li>`).join('')}</ul></div>`;
+}
+$('#tGo').onclick=doTrack;
+
+/* ---------- global ---------- */
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('#trk').classList.contains('on'))closeOv('trk');else if($('#drawer').classList.contains('on'))closeDrawer();else if($('#dz').classList.contains('on'))closeOv('dz');else if($('#co').classList.contains('on'))closeOv('co')});
+renderHome();saveCart();
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:.12}):null;
+$$('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
+</script>
+</body>
+</html>
